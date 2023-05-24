@@ -38,6 +38,20 @@ const show = keyframes`
     opacity: 1;
   }
   `;
+
+const Title = styled.div`
+  background: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+  color: ${props => props.theme.white};
+  display: none;
+  flex-direction: column;
+  justify-content: flex-center;
+  transition: 0.2s ease-in-out;
+`;
 const SingleGame = styled.div`
   border-radius: 20px;
   overflow: hidden;
@@ -49,6 +63,15 @@ const SingleGame = styled.div`
   animation: ${show} 2s linear infinite;
   &:hover {
     box-shadow: 0px 0px 50px -12px rgba(0, 0, 0, 1);
+  }
+  &:hover ${Title} {
+    display: flex;
+  }
+  &:hover .con {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
   }
 
   --d: 6px; /* folded part */
@@ -105,6 +128,15 @@ const SingleGame2 = styled.div`
   &:hover {
     box-shadow: 0px 0px 50px -12px rgba(0, 0, 0, 1);
   }
+  &:hover ${Title} {
+    display: flex;
+  }
+  &:hover .con {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
 `;
 
 const Image = styled.img<{ src: string; alt: string }>`
@@ -132,4 +164,5 @@ export {
   SingleGame2,
   Nav,
   NavItem,
+  Title,
 };
