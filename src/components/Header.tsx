@@ -5,13 +5,13 @@ import theme from "../theme";
 interface HeaderProps {
   categories: string[];
   selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  handleSelectCategory: (c: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
   categories,
   selectedCategory,
-  setSelectedCategory,
+  handleSelectCategory,
 }) => {
   return (
     <Nav>
@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({
           style={{
             backgroundColor: selectedCategory === c ? theme.primary : "",
           }}
-          onClick={() => setSelectedCategory(c)}
+          onClick={() => handleSelectCategory(c)}
           key={i + c}
         >
           {c}

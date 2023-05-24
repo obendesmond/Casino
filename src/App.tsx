@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import axios from "axios";
-import Game from "./components/Game";
 import Header from "./components/Header";
+import Games from "./components/Games";
 
 axios.defaults.baseURL = "http://stage.whgstage.com/front-end-test";
 
@@ -18,6 +18,7 @@ type jackpotType = { game: string; amount: number };
 
 const App: React.FC = () => {
   const [games, setGames] = useState<gameType[]>([]);
+  const [allGames, setAllGames] = useState<gameType[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const otherCategories: readonly string[] = ["ball", "virtual", "fun"];
@@ -25,6 +26,10 @@ const App: React.FC = () => {
   useEffect(() => {
     getGames();
   }, []);
+
+  useEffect(() => {
+    handleSelectCategory(selectedCategory);
+  }, [allGames]);
 
   const getGames = async () => {
     const { data } = await axios.get("/games.php");
@@ -54,20 +59,39 @@ const App: React.FC = () => {
       });
     });
 
-    setGames(rawGames);
     setCategories(rawCategories);
+    // take first category as selected category when app starts
+    setSelectedCategory(rawCategories[0]);
+    // set all games
+    setAllGames(rawGames);
+
+    setGames(rawGames);
+  };
+
+  const handleSelectCategory = (c: string) => {
+    setSelectedCategory(c); // change category
+
+    // filter games with respect to category
+    const newGames = allGames.filter(g => {
+      if (c === "other") {
+        return (
+          g.categories.includes(otherCategories[0]) || // includes ball
+          g.categories.includes(otherCategories[1]) || // includes virtual
+          g.categories.includes(otherCategories[2]) // includes fun
+        );
+      } else return g.categories.includes(c);
+    });
+    setGames(newGames);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Header
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        handleSelectCategory={handleSelectCategory}
         categories={categories}
       />
-      {games.map(game => (
-        <Game key={game.id} game={game} />
-      ))}
+      <Games selectedCat={selectedCategory} games={games} />
     </ThemeProvider>
   );
 };
