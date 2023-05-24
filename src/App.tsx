@@ -4,6 +4,7 @@ import theme from "./theme";
 import axios from "axios";
 import Header from "./components/Header";
 import Games from "./components/Games";
+import Footer from "./components/Footer";
 
 axios.defaults.baseURL = "http://stage.whgstage.com/front-end-test";
 
@@ -92,6 +93,7 @@ const App: React.FC = () => {
         categories={categories}
       />
       <Games selectedCat={selectedCategory} games={games} />
+      <Footer />
     </ThemeProvider>
   );
 };

@@ -156,6 +156,14 @@ const JackPot = styled.div`
   text-align: center;
 `;
 
+const FooterEl = styled.footer`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+`;
+
 export {
   GamesContainer,
   JackPot,
@@ -165,4 +173,5 @@ export {
   Nav,
   NavItem,
   Title,
+  FooterEl,
 };
